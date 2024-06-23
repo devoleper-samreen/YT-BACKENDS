@@ -5,7 +5,7 @@ import DB_CONNECT from "./db/db.js"
 import cookieParser from "cookie-parser";
 
 dotenv.config({
-    path: "./env"
+    path: "./.env"
 })
 
 const app = express();
@@ -29,8 +29,10 @@ import userRoute from "./routes/user.route.js"
 //routes declaration
 app.use("/api/v1/users", userRoute)
 
+const port = process.env.PORT || 3000;
+
 DB_CONNECT();
 
-app.listen(process.env.PORT || 8000, () => {
-    console.log(`SERVER IS RUNNING ON ${process.env.PORT || 8000} and https//localhost:${process.env.PORT || 8000}` )
+app.listen(port, () => {
+    console.log(`SERVER IS RUNNING ON ${port}`)
 })
