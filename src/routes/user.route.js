@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { registerUser} from "../controllers/user.controller.js"
-import { loginUser } from "../controllers/login.controller.js";
-import { logoutUser } from "../controllers/logout.controller.js";
+import { registerUser} from "../controllers/Auth/user.controller.js"
+import { loginUser } from "../controllers/Auth/login.controller.js";
+import { logoutUser } from "../controllers/Auth/logout.controller.js";
 import { upload } from "../middlewares/multer.js"
 import { verifyJWT } from "../middlewares/auth.middlewares.js";
-import { refreshAccessToken } from "../controllers/refAccToken.js";
-import {changeCurrentPassword} from "../controllers/updatePasswordAndAccout.controller.js"
-import {getCurrentUser} from "../controllers/getUser.controller.js"
-import {updateAccountDetails} from "../controllers/updatePasswordAndAccout.controller.js"
-import {updateUserAvatar, updateUserCoverImage} from "../controllers/updateImages.controller.js"
-import {getUserChannelProfile, getWatchHistory} from"../controllers/getUserChannelPipelines.js"
+import { refreshAccessToken } from "../controllers/Auth/refAccToken.js";
+import {changeCurrentPassword} from "../controllers/Auth/updatePasswordAndAccout.controller.js"
+import {getCurrentUser} from "../controllers/Auth/getUser.controller.js"
+import {updateAccountDetails} from "../controllers/Auth/updatePasswordAndAccout.controller.js"
+import {updateUserAvatar, updateUserCoverImage} from "../controllers/Auth/updateImages.controller.js"
+import {getUserChannelProfile, getWatchHistory} from"../controllers/Auth/getUserChannelPipelines.js"
 
 const router = Router()
 
@@ -45,6 +45,6 @@ router.route("/cover-image").patch(verifyJWT, upload.single("coverImage"), updat
 
 router.route("/c/:username").get(verifyJWT, getUserChannelProfile)
 
-router.route("/history").get(verifyJWT, )
+router.route("/history").get(verifyJWT, getWatchHistory)
 
 export default router
