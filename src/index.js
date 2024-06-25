@@ -25,9 +25,11 @@ app.use(cookieParser())
 
 //routes import
 import userRoute from "./routes/user.route.js"
+import videoRouter from "./routes/video.route.js"
 
 //routes declaration
 app.use("/api/v1/users", userRoute)
+app.use("/api/v1/videos", videoRouter)
 
 const port = process.env.PORT || 3000;
 

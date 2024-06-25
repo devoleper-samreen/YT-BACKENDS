@@ -11,13 +11,17 @@ const videoSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        title: {
+            type: String,
+            required: true
+
+        },
         description: {
             type: String,
             required: true
         },
         duration: {
-            type: Number,
-            required: true
+            type: Number
         },
         views: {
             type: Number,
@@ -38,5 +42,5 @@ const videoSchema = new mongoose.Schema(
 )
 
 videoSchema.plugin(mongooseAggregatePaginat)
-e
+
 export const Video = mongoose.model("Video", videoSchema)

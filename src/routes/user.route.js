@@ -1,15 +1,21 @@
 import { Router } from "express";
+//from Auth
 import { registerUser} from "../controllers/Auth/user.controller.js"
 import { loginUser } from "../controllers/Auth/login.controller.js";
 import { logoutUser } from "../controllers/Auth/logout.controller.js";
+import { refreshAccessToken } from "../controllers/Auth/refAccToken.js";
+
+//from middlewares
 import { upload } from "../middlewares/multer.js"
 import { verifyJWT } from "../middlewares/auth.middlewares.js";
-import { refreshAccessToken } from "../controllers/Auth/refAccToken.js";
-import {changeCurrentPassword} from "../controllers/Auth/updatePasswordAndAccout.controller.js"
-import {getCurrentUser} from "../controllers/Auth/getUser.controller.js"
-import {updateAccountDetails} from "../controllers/Auth/updatePasswordAndAccout.controller.js"
-import {updateUserAvatar, updateUserCoverImage} from "../controllers/Auth/updateImages.controller.js"
-import {getUserChannelProfile, getWatchHistory} from"../controllers/Auth/getUserChannelPipelines.js"
+
+//from update
+import {changeCurrentPassword, updateAccountDetails} from "../controllers/update/updatePasswordAndAccout.controller.js"
+import {updateUserAvatar, updateUserCoverImage} from "../controllers/update/updateImages.controller.js"
+
+//from pipelines
+import {getCurrentUser} from "../controllers/pipe/getUser.controller.js"
+import {getUserChannelProfile, getWatchHistory} from"../controllers/pipe/getUserChannelPipelines.js"
 
 const router = Router()
 
@@ -37,7 +43,7 @@ router.route("/change-password").post(verifyJWT, changeCurrentPassword)
 
 router.route("/current-user").get(verifyJWT, getCurrentUser)
 
-router.route("update-account").patch(verifyJWT, updateAccountDetails)
+router.route("/update-account").patch(verifyJWT, updateAccountDetails)
 
 router.route("/avatar").patch(verifyJWT, upload.single("avatar"), updateUserAvatar)
 

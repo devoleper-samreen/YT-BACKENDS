@@ -1,6 +1,6 @@
-import { asyncHandler } from "../utils/asyncHandler.js"
-import { ApiResponse } from "../utils/apiResponse.js"
-import { User } from "../models/user.model.js"
+import { asyncHandler } from "../../utils/asyncHandler.js"
+import { ApiResponse } from "../../utils/apiResponse.js"
+import { User } from "../..//models/user.model.js"
 
 const logoutUser = asyncHandler(async (req, res) => {
    await User.findByIdAndUpdate(

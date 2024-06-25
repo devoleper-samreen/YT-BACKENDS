@@ -1,7 +1,7 @@
-import { asyncHandler } from "../utils/asyncHandler.js"
-import  { ApiError} from "../utils/apiError.js"
-import  { ApiResponse } from "../utils/apiResponse.js"
-import { User} from "../models/user.model.js"
+import { asyncHandler } from "../../utils/asyncHandler.js"
+import  { ApiError} from "../../utils/apiError.js"
+import  { ApiResponse } from "../../utils/apiResponse.js"
+import { User} from "../../models/user.model.js"
 import bcrypt from "bcrypt"
 
 const generateAccessAndRefreshToken = async (userId) => 

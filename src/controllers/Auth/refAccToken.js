@@ -1,15 +1,15 @@
-import {asyncHandler} from "../utils/asyncHandler.js"
-import {apiError} from "../utils/apiError.js"
+import {asyncHandler} from "../../utils/asyncHandler.js"
+import {ApiError} from "../../utils/apiError.js"
 import jwt from "jsonwebtoken"
-import  {User} from "../models/user.model.js"
-import generateAccessAndRefreshToken from "../controllers/login.controller.js"
-import { ApiResponse } from "../utils/apiResponse.js"
+import  {User} from "../../models/user.model.js"
+import {generateAccessAndRefreshToken} from "../Auth/login.controller.js"
+import { ApiResponse } from "../../utils/apiResponse.js"
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
     if ( !incomingRefreshToken) {
-        throw new apiError(401, "unAuthiorized request")
+        throw new ApiError(401, "unAuthiorized request")
     }
 
   try {
@@ -18,11 +18,11 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     const user = await User.findById(decodedToken?._id)
   
     if ( !user ) {
-      throw new apiError(401, "invalid refresh token")
+      throw new ApiError(401, "invalid refresh token")
     }
   
     if ( incomingRefreshToken !== user?.refreshToken) {
-      throw new apiError(401, "refreshed token is expired or used")
+      throw new ApiError(401, "refreshed token is expired or used")
     }
   
   const options = {
@@ -39,7 +39,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   )
   
   } catch (error) {
-    throw new apiError(401, error?.message || "invalid refresh token")
+    throw new ApiError(401, error?.message || "invalid refresh token")
   }
 
 })
