@@ -1,4 +1,3 @@
-import mongoose, {isValidObjectId} from "mongoose"
 import {Playlist} from "../../models/playlist.model.js"
 import {ApiError} from "../../utils/apiError.js"
 import {ApiResponse} from "../../utils/apiResponse.js"
@@ -142,12 +141,55 @@ res.status(200).json(
 const deletePlaylist = asyncHandler(async (req, res) => {
     const {playlistId} = req.params
     // TODO: delete playlist
+
+    if(!playlistId){
+        throw new ApiError(400, "please provide playlist id")
+    }
+    const playlist = await Playlist.findById(playlistId)
+
+    if ( playlist.owner !== req.user) {
+        throw new ApiError(400, "you are not allowed")
+    }
+
+    const deletedPlaylist = await Playlist.findByIdAndDelete(playlistId)
+
+    if ( !deletedPlaylist) {
+        throw new ApiError(400, "playlist not deleted")
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, deletedPlaylist, "playlist delete successfully")
+    )
 })
 
 const updatePlaylist = asyncHandler(async (req, res) => {
     const {playlistId} = req.params
     const {name, description} = req.body
     //TODO: update playlist
+
+    if ( !(playlistId || name || description)) {
+        throw new ApiError(400, "please provide playlistid, name and description ")
+    }
+
+    const playlist = await Playlist.findById(playlistId)
+
+    if ( playlist.owner !== req.user) {
+        throw new ApiError(400, "you are not allowed")
+    }
+
+    const updatePlaylist = await Playlist.findByIdAndUpdate({
+        name,
+        description
+    })
+
+    if (!updatePlaylist) {
+        throw new ApiError(500, "playlist not updated")
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, updatePlaylist, "update playlist successfully")
+    )
+
 })
 
 export {
